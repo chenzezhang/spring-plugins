@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.oracle.javafx.jmx.json.JSONException;
 import com.plugins.monitoring.domain.utils.Result;
 import com.plugins.monitoring.utils.ResultUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -78,7 +80,6 @@ class login {
 
     private HttpServletResponse httpServletResponse;
 
-
     public void setHttpServletResponse(HttpServletResponse httpServletResponse) {
         this.httpServletResponse = httpServletResponse;
     }
@@ -102,5 +103,11 @@ class login {
         PrintWriter write = httpServletResponse.getWriter();
         write.write(jsonString);
         write.flush();
+
+
+        Logger logger = LoggerFactory.getLogger(login.class);
+
+        logger.info("这里是拦截器，没有token不能登录");
+
     }
 }
