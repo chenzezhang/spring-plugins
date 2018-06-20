@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class Login {
+public class LoginController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public OauthUser Login() {
 
-        Logger logger = LoggerFactory.getLogger(Login.class);
+        Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 
 

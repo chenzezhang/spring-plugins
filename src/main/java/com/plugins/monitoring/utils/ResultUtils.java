@@ -11,6 +11,7 @@ import com.plugins.monitoring.consist.ResultCode;
 public class ResultUtils {
 
     public static Result<Object> success(Object data) {
+
         return new Result<Object>(ResultCode.Success, data);
     }
 
@@ -23,6 +24,7 @@ public class ResultUtils {
     }
 
     public static Result<Object> warn(ResultCode resultCode) {
+
         return new Result<Object>(resultCode);
     }
 }

@@ -33,6 +33,7 @@ public class OauthUser {
     }
 
     public String getPassword() {
+
         return password;
     }
 }
