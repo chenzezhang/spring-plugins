@@ -29,10 +29,10 @@ public interface RoleMapper {
     Role getRoleName(String roleName);
 
     @Insert("INSERT INTO role(roleName) VALUES(#{roleName})")
-    void insert(Role role);
+    void insert(String roleName);
 
     @Update("UPDATE role SET roleName=#{roleName} WHERE id =#{id}")
-    void update(Role role);
+    void update(String roleName);
 
     @Delete("DELETE FROM users WHERE id =#{id}")
     void delete(Long id);

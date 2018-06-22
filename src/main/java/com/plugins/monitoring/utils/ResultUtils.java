@@ -1,7 +1,8 @@
 package com.plugins.monitoring.utils;
 
-import com.plugins.monitoring.domain.utils.Result;
 import com.plugins.monitoring.consist.ResultCode;
+import com.plugins.monitoring.domain.utils.Result;
+
 
 /**
  * @Auther: Rockzcz
@@ -10,9 +11,9 @@ import com.plugins.monitoring.consist.ResultCode;
  */
 public class ResultUtils {
 
-    public static Result<Object> success(Object data) {
+    public static Result<Object> success(ResultCode resultCode, Object data) {
 
-        return new Result<Object>(ResultCode.Success, data);
+        return new Result<Object>(resultCode, data);
     }
 
     public static Result<Object> warn(int code, String msg, Boolean success) {

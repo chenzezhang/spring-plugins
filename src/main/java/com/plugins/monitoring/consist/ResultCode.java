@@ -11,7 +11,8 @@ public enum ResultCode {
     Success(0,"请求成功", true),
     WEAK_NET_WORK(-1, "网络异常，请稍后重试", false),
     PASSWORD_ERROR(10001, "用户名或密码错误", false),
-    PARAMETER_ERROR(405, "参数错误", false);
+    PARAMETER_ERROR(405, "参数错误", false),
+    Register_Success(200, "注册成功", true);
 
     private int code;
     private String msg;

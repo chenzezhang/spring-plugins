@@ -1,43 +1,35 @@
 package com.plugins.monitoring.web;
 
 import com.plugins.monitoring.domain.user.OauthUser;
-import com.plugins.monitoring.mybatis.entity.Role;
-import com.plugins.monitoring.mybatis.mapper.RoleMapper;
+import com.plugins.monitoring.utils.ResultUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
+
 @RestController
 public class LoginController {
 
-    @Autowired
-    private RoleMapper roleMapper;
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public OauthUser Login() {
+    public Object Login(@Valid OauthUser userLoginValidator, BindingResult request) {
 
         Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-        OauthUser user = new OauthUser();
-        user.setId(1);
-        user.setUsername("zhanghaoliang");
-        user.setPassword("1231");
+        if(request.hasErrors()) {
 
-        Role role = roleMapper.getRoleName("理财");
+            logger.info("用户名是：" + userLoginValidator.getUsername() + "，昵称是：" + userLoginValidator.getPassword());
 
+            return ResultUtils.warn(401, request.getFieldError().getDefaultMessage(), false);
+        }
 
-        logger.info("-----------------------------------");
+        logger.info("登录成功------,用户名是：" + userLoginValidator.getUsername() + "，密码是：" + userLoginValidator.getPassword());
 
-
-        logger.info("role: --------" + role.toString());
-
-
-
-        logger.info("登录成功------,用户名是：" + user.getUsername() + "，密码是：" + user.getPassword());
-
-        return user;
+        return userLoginValidator;
     }
 
 

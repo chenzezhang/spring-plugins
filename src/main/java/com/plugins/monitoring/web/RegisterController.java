@@ -1,9 +1,13 @@
 package com.plugins.monitoring.web;
 
+import com.plugins.monitoring.consist.ResultCode;
 import com.plugins.monitoring.domain.user.OauthRegister;
+import com.plugins.monitoring.mybatis.entity.Role;
+import com.plugins.monitoring.mybatis.mapper.RoleMapper;
 import com.plugins.monitoring.utils.ResultUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +25,9 @@ import javax.validation.Valid;
 @RestController
 public class RegisterController {
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @RequestMapping(value="/register", method = RequestMethod.POST)
 
     public Object register(@Valid OauthRegister userRegisterValidator, BindingResult request) {
@@ -33,10 +40,17 @@ public class RegisterController {
             return ResultUtils.warn(401, request.getFieldError().getDefaultMessage(), false);
         }
 
+        Role role = roleMapper.getRoleName("理财");
+
+        logger.info("-----------------------------------");
+
+        logger.info("role: --------" + role.toString());
+
+
+        roleMapper.insert("统一入口");
 
         logger.info("用户名是：" + userRegisterValidator.getUsername() + "，昵称是：" + userRegisterValidator.getNickname() + "，部门是:" + userRegisterValidator.getDepartment());
 
-
-        return userRegisterValidator;
+        return ResultUtils.success(ResultCode.Register_Success, userRegisterValidator);
     }
 }
