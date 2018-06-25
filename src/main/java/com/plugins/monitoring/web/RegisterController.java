@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-
 /**
  * @Auther: Rockzcz
  * @Date: 2018/6/15 15:06
@@ -40,14 +39,13 @@ public class RegisterController {
             return ResultUtils.warn(401, request.getFieldError().getDefaultMessage(), false);
         }
 
-        Role role = roleMapper.getRoleName("理财");
+        Role role = new Role(userRegisterValidator.getDepartment());
 
-        logger.info("-----------------------------------");
+        logger.info("role: --------" + role.getRoleName());
 
-        logger.info("role: --------" + role.toString());
+        logger.info(role.getRoleName());
 
-
-        roleMapper.insert("统一入口");
+        roleMapper.insert(role);
 
         logger.info("用户名是：" + userRegisterValidator.getUsername() + "，昵称是：" + userRegisterValidator.getNickname() + "，部门是:" + userRegisterValidator.getDepartment());
 
