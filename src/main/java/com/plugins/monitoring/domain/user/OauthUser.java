@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 /**
  * @Auther: Rockzcz
  * @Date: 2018/6/14 14:52
- * @Description: 账户信息实体
+ * @Description: 权限验证
  */
 
 public class OauthUser {

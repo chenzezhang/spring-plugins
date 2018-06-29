@@ -17,7 +17,8 @@ public interface RoleMapper {
 
     @Select("SELECT * FROM db_role WHERE roleName = #{roleName}")
     @Results({
-            @Result(property = "roleName", column = "roleName")
+            @Result(property = "roleName", column = "roleName"),
+            @Result(property = "id", column = "id")
     })
     Role getRoleName(String roleName);
 

@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 /**
  * @Auther: Rockzcz
  * @Date: 2018/6/15 14:54
- * @Description:  注册实体
+ * @Description:  权限验证
  */
 public class OauthRegister {
 
@@ -56,5 +56,10 @@ public class OauthRegister {
 
     public String getDepartment() {
         return department;
+    }
+
+    @Override
+    public String toString() {
+        return username + nickname + nickname + department;
     }
 }

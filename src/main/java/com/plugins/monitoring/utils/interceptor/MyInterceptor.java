@@ -99,10 +99,11 @@ class login {
 
         httpServletResponse.setHeader("Content-Type", "application/json;charset=utf-8");
 
+        httpServletResponse.reset();
+
         PrintWriter write = httpServletResponse.getWriter();
         write.write(jsonString);
         write.flush();
-
 
         Logger logger = LoggerFactory.getLogger(login.class);
 

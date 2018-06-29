@@ -2,8 +2,15 @@ package com.plugins.monitoring.web;
 
 import com.plugins.monitoring.consist.ResultCode;
 import com.plugins.monitoring.domain.user.OauthRegister;
+import com.plugins.monitoring.mybatis.entity.Project;
 import com.plugins.monitoring.mybatis.entity.Role;
+import com.plugins.monitoring.mybatis.entity.Token;
+import com.plugins.monitoring.mybatis.entity.User;
+import com.plugins.monitoring.mybatis.mapper.ProjectMapper;
 import com.plugins.monitoring.mybatis.mapper.RoleMapper;
+import com.plugins.monitoring.mybatis.mapper.TokenMapper;
+import com.plugins.monitoring.mybatis.mapper.UserMapper;
+import com.plugins.monitoring.utils.MD5Util;
 import com.plugins.monitoring.utils.ResultUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+
 
 /**
  * @Auther: Rockzcz
@@ -27,9 +35,19 @@ public class RegisterController {
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private ProjectMapper projectMapper;
+
+    @Autowired
+    private TokenMapper tokenMapper;
+
     @RequestMapping(value="/register", method = RequestMethod.POST)
 
     public Object register(@Valid OauthRegister userRegisterValidator, BindingResult request) {
+
         Logger logger = LoggerFactory.getLogger(LoginController.class);
 
         if(request.hasErrors()) {
@@ -39,16 +57,76 @@ public class RegisterController {
             return ResultUtils.warn(401, request.getFieldError().getDefaultMessage(), false);
         }
 
-        Role role = new Role(userRegisterValidator.getDepartment());
+        if (getRole(userRegisterValidator) == null) {
 
-        logger.info("role: --------" + role.getRoleName());
+            logger.info("getRole:" + getRole(userRegisterValidator) + ",用户不存在，创建-----");
 
-        logger.info(role.getRoleName());
+            Role role = new Role(userRegisterValidator.getDepartment());
 
-        roleMapper.insert(role);
+            logger.info("getRole: --------" + getRole(userRegisterValidator));
+
+            logger.info(role.getRoleName());
+
+            roleMapper.insert(role);
+
+        }
+
+        /**
+         * 部门已经存在
+         * 比对数据库中是否存在用户名。
+         */
+
+        User getUserName = userMapper.getUserName(userRegisterValidator.getUsername());
+        Role role = getRole(userRegisterValidator);
+
+        if(getUserName != null) {
+
+            logger.info("数据库查到的user_name：" + userMapper.getUserName(userRegisterValidator.getUsername()) + "在数据库中已经存在");
+
+            return ResultUtils.warn(ResultCode.Register_ERROR);
+        }
+
+        /**
+         * 部门存在，数据库中没有用户名。
+         * 开始注册。
+         */
+
+        User user = new User(userRegisterValidator.getUsername(), userRegisterValidator.getNickname(), userRegisterValidator.getPassword(), role.getId());
+
+        userMapper.insert(user);
+
+        // 插入分类权限表
+        Project project = new Project(1, role.getId());
+        projectMapper.insert(project);
+
+        // 插入登录权限控制
+        User getUser = userMapper.getUserName(userRegisterValidator.getUsername());
+
+        String access_token = MD5Util.MD5(userRegisterValidator.toString());
+        Token token = new Token(access_token, getUser.getId(), role.getId());
+        tokenMapper.insert(token);
+
+        logger.info("生成的token是:" + access_token);
+
+        //用户访问过之后重新设置用户的访问时间，存储到cookie中，然后发送到客户端浏览器
+//        Cookie cookie = new Cookie("AccessToken", access_token);//创建一个cookie，cookie的名字是AccessToken
+        //设置Cookie的有效期为1小时
+//        cookie.setMaxAge(60*60);
+//        cookie.setPath("/");
+        //将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器
+//        response.addCookie(cookie);
+
+
+
+//        System.out.print(response,"########################");
 
         logger.info("用户名是：" + userRegisterValidator.getUsername() + "，昵称是：" + userRegisterValidator.getNickname() + "，部门是:" + userRegisterValidator.getDepartment());
 
-        return ResultUtils.success(ResultCode.Register_Success, userRegisterValidator);
+        return ResultUtils.success(ResultCode.REGISTER_SUCCESS, userRegisterValidator);
+    }
+
+    public Role getRole(OauthRegister userRegisterValidator){
+        return roleMapper.getRoleName(userRegisterValidator.getDepartment());
     }
 }
+
