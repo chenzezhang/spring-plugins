@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -46,7 +48,7 @@ public class RegisterController {
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
 
-    public Object register(@Valid OauthRegister userRegisterValidator, BindingResult request) {
+    public Object register(@Valid OauthRegister userRegisterValidator, BindingResult request, HttpServletResponse response) {
 
         Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -68,7 +70,6 @@ public class RegisterController {
             logger.info(role.getRoleName());
 
             roleMapper.insert(role);
-
         }
 
         /**
@@ -108,17 +109,13 @@ public class RegisterController {
 
         logger.info("生成的token是:" + access_token);
 
-        //用户访问过之后重新设置用户的访问时间，存储到cookie中，然后发送到客户端浏览器
-//        Cookie cookie = new Cookie("AccessToken", access_token);//创建一个cookie，cookie的名字是AccessToken
-        //设置Cookie的有效期为1小时
-//        cookie.setMaxAge(60*60);
-//        cookie.setPath("/");
-        //将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器
-//        response.addCookie(cookie);
-
-
-
-//        System.out.print(response,"########################");
+//      用户访问过之后重新设置用户的访问时间，存储到cookie中，然后发送到客户端浏览器
+        Cookie cookie = new Cookie("AccessToken", access_token);//创建一个cookie，cookie的名字是AccessToken
+//      设置Cookie的有效期为1小时
+        cookie.setMaxAge(60*60);
+        cookie.setPath("/");
+//      将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器
+        response.addCookie(cookie);
 
         logger.info("用户名是：" + userRegisterValidator.getUsername() + "，昵称是：" + userRegisterValidator.getNickname() + "，部门是:" + userRegisterValidator.getDepartment());
 

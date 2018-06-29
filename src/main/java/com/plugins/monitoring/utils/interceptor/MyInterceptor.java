@@ -99,7 +99,7 @@ class login {
 
         httpServletResponse.setHeader("Content-Type", "application/json;charset=utf-8");
 
-        httpServletResponse.reset();
+        httpServletResponse.setCharacterEncoding("UTF-8");
 
         PrintWriter write = httpServletResponse.getWriter();
         write.write(jsonString);
