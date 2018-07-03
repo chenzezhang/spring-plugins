@@ -24,7 +24,7 @@ public interface UserMapper {
     User getUserName(String username);
 
     @Insert("INSERT INTO db_user(user_name, nick_name, password, role_id) VALUES(#{username}, #{nickname}, #{password}, #{role_id})")
-    void insert(User user);
+    int insert(User user);
 
     @Update("UPDATE db_user SET roleName=#{user_name} WHERE id =#{id}")
     void update(String user_name);

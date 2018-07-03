@@ -23,7 +23,7 @@ public interface RoleMapper {
     Role getRoleName(String roleName);
 
     @Insert("INSERT INTO db_role(roleName) VALUES(#{roleName})")
-    void insert(Role role);
+    int insert(Role role);
 
     @Update("UPDATE db_role SET roleName=#{roleName} WHERE id =#{id}")
     void update(String roleName);

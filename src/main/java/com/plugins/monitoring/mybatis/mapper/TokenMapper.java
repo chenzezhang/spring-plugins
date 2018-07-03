@@ -24,7 +24,7 @@ public interface TokenMapper {
     Token getToken(char id);
 
     @Insert("INSERT INTO db_token(id, user_id, role_id) VALUES(#{id}, #{user_id}, #{role_id})")
-    void insert(Token token);
+    int insert(Token token);
 
     @Update("UPDATE db_token SET id=#{id} WHERE id =#{id}")
     void update(char id);

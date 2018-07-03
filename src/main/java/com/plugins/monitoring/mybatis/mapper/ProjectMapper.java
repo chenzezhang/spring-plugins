@@ -24,7 +24,7 @@ public interface ProjectMapper {
     Project getPermissions(String role_id);
 
     @Insert("INSERT INTO db_permissions(permissions_id, role_id) VALUES(#{permission_id}, #{role_id})")
-    void insert(Project project);
+    int insert(Project project);
 
     @Update("UPDATE db_permissions SET permissions_id=#{permissions_id}, role_id = #{role_id} WHERE id =#{id}")
     void update(String roleName);

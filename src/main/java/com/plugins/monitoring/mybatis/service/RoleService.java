@@ -22,7 +22,7 @@ public class RoleService {
         return roleMapper.getRoleName( roleName );
     }
 
-    public void insert(Role role) {
-        roleMapper.insert( role );
+    public int insert(Role role) {
+        return roleMapper.insert( role );
     }
 }

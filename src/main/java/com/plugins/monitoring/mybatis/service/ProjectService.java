@@ -17,8 +17,8 @@ public class ProjectService {
     @Autowired
     private ProjectMapper projectMapper;
 
-    public void insert(Project project) {
-        projectMapper.insert( project );
+    public int insert(Project project) {
+        return projectMapper.insert( project );
     }
 
     public Project getPermissions(String role_id) {
