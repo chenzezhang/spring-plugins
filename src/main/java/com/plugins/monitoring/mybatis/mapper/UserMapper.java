@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.*;
  * @Date: 2018/6/28 15:18
  * @Description: 用户分类
  */
+
+@Mapper
 public interface UserMapper {
     /**
      * @return object
@@ -29,6 +31,4 @@ public interface UserMapper {
 
     @Delete("DELETE FROM db_user WHERE id =#{id}")
     void delete(Long id);
-
-
 }

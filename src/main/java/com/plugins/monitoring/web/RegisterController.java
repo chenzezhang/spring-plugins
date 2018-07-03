@@ -6,10 +6,10 @@ import com.plugins.monitoring.mybatis.entity.Project;
 import com.plugins.monitoring.mybatis.entity.Role;
 import com.plugins.monitoring.mybatis.entity.Token;
 import com.plugins.monitoring.mybatis.entity.User;
-import com.plugins.monitoring.mybatis.mapper.ProjectMapper;
-import com.plugins.monitoring.mybatis.mapper.RoleMapper;
-import com.plugins.monitoring.mybatis.mapper.TokenMapper;
-import com.plugins.monitoring.mybatis.mapper.UserMapper;
+import com.plugins.monitoring.mybatis.service.ProjectService;
+import com.plugins.monitoring.mybatis.service.RoleService;
+import com.plugins.monitoring.mybatis.service.TokenService;
+import com.plugins.monitoring.mybatis.service.UserService;
 import com.plugins.monitoring.utils.MD5Util;
 import com.plugins.monitoring.utils.ResultUtils;
 import org.slf4j.Logger;
@@ -35,16 +35,16 @@ import javax.validation.Valid;
 public class RegisterController {
 
     @Autowired
-    private RoleMapper roleMapper;
+    private TokenService tokenService;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Autowired
-    private ProjectMapper projectMapper;
+    private RoleService roleService;
 
     @Autowired
-    private TokenMapper tokenMapper;
+    private ProjectService projectService;
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
 
@@ -69,7 +69,7 @@ public class RegisterController {
 
             logger.info(role.getRoleName());
 
-            roleMapper.insert(role);
+            roleService.insert(role);
         }
 
         /**
@@ -77,12 +77,12 @@ public class RegisterController {
          * 比对数据库中是否存在用户名。
          */
 
-        User getUserName = userMapper.getUserName(userRegisterValidator.getUsername());
+        User getUserName = userService.getUserName(userRegisterValidator.getUsername());
         Role role = getRole(userRegisterValidator);
 
         if(getUserName != null) {
 
-            logger.info("数据库查到的user_name：" + userMapper.getUserName(userRegisterValidator.getUsername()) + "在数据库中已经存在");
+            logger.info("数据库查到的user_name：" + userService.getUserName(userRegisterValidator.getUsername()) + "在数据库中已经存在");
 
             return ResultUtils.warn(ResultCode.Register_ERROR);
         }
@@ -94,18 +94,18 @@ public class RegisterController {
 
         User user = new User(userRegisterValidator.getUsername(), userRegisterValidator.getNickname(), userRegisterValidator.getPassword(), role.getId());
 
-        userMapper.insert(user);
+        userService.addUser(user);
 
         // 插入分类权限表
         Project project = new Project(1, role.getId());
-        projectMapper.insert(project);
+        projectService.insert(project);
 
         // 插入登录权限控制
-        User getUser = userMapper.getUserName(userRegisterValidator.getUsername());
+        User getUser =  userService.getUserName(userRegisterValidator.getUsername());
 
         String access_token = MD5Util.MD5(userRegisterValidator.toString());
         Token token = new Token(access_token, getUser.getId(), role.getId());
-        tokenMapper.insert(token);
+        tokenService.insert( token );
 
         logger.info("生成的token是:" + access_token);
 
@@ -123,7 +123,7 @@ public class RegisterController {
     }
 
     public Role getRole(OauthRegister userRegisterValidator){
-        return roleMapper.getRoleName(userRegisterValidator.getDepartment());
+        return roleService.getRoleName(userRegisterValidator.getDepartment());
     }
 }
 

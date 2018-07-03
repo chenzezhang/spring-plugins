@@ -13,6 +13,7 @@ public interface ProjectMapper {
 
     /**
      * @return object
+     * @param role_id
      */
 
     @Select("SELECT * FROM db_permissions WHERE roleName = #{roleName}")
@@ -20,7 +21,7 @@ public interface ProjectMapper {
             @Result(property = "permission_id", column = "permission_id"),
             @Result(property = "role_id", column = "role_id")
     })
-    Project getPermissions(int role_id);
+    Project getPermissions(String role_id);
 
     @Insert("INSERT INTO db_permissions(permissions_id, role_id) VALUES(#{permission_id}, #{role_id})")
     void insert(Project project);

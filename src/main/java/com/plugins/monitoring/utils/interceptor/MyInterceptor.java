@@ -41,7 +41,7 @@ public class MyInterceptor implements HandlerInterceptor {
         }
 
         for (Cookie cookie : cookies) {
-            if(!cookie.getName().equals("ccat")) {
+            if(!cookie.getName().equals("AccessToken")) {
                 login.result();
             }
         }
