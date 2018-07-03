@@ -4,6 +4,7 @@ import com.plugins.monitoring.consist.ResultCode;
 import com.plugins.monitoring.domain.user.OauthUser;
 import com.plugins.monitoring.mybatis.entity.Token;
 import com.plugins.monitoring.mybatis.entity.User;
+import com.plugins.monitoring.mybatis.service.RedisService;
 import com.plugins.monitoring.mybatis.service.TokenService;
 import com.plugins.monitoring.mybatis.service.UserService;
 import com.plugins.monitoring.utils.MD5Util;
@@ -29,6 +30,9 @@ public class LoginController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private RedisService redisService ;
 
     @RequestMapping(value = "/api/login",method = RequestMethod.POST)
     public Object Login(@Valid OauthUser userLoginValidator, BindingResult request, HttpServletResponse response) {
@@ -70,6 +74,9 @@ public class LoginController {
              * 存在登录态，并且是老用户，直接更新登录态
              */
             tokenService.update( access_token );
+
+
+            redisService.set( "1","sdfsdfsdf", 10L );
 
         } else {
 
