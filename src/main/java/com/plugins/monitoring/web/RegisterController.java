@@ -46,7 +46,7 @@ public class RegisterController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value="/register", method = RequestMethod.POST)
+    @RequestMapping(value="/api/register", method = RequestMethod.POST)
 
     public Object register(@Valid OauthRegister userRegisterValidator, BindingResult request, HttpServletResponse response) {
 
@@ -92,7 +92,7 @@ public class RegisterController {
          * 开始注册。
          */
 
-        User user = new User(userRegisterValidator.getUsername(), userRegisterValidator.getNickname(), userRegisterValidator.getPassword(), role.getId());
+        User user = new User(userRegisterValidator.getUsername(), userRegisterValidator.getNickname(), MD5Util.MD5(userRegisterValidator.getPassword()), role.getId());
 
         userService.addUser(user);
 
@@ -103,18 +103,18 @@ public class RegisterController {
         // 插入登录权限控制
         User getUser =  userService.getUserName(userRegisterValidator.getUsername());
 
-        String access_token = MD5Util.MD5(userRegisterValidator.toString());
+        String access_token = MD5Util.MD5(userRegisterValidator.getUsername());
         Token token = new Token(access_token, getUser.getId(), role.getId());
         tokenService.insert( token );
 
         logger.info("生成的token是:" + access_token);
 
-//      用户访问过之后重新设置用户的访问时间，存储到cookie中，然后发送到客户端浏览器
+        // 用户访问过之后重新设置用户的访问时间，存储到cookie中，然后发送到客户端浏览器
         Cookie cookie = new Cookie("AccessToken", access_token);//创建一个cookie，cookie的名字是AccessToken
-//      设置Cookie的有效期为1小时
+        // 设置Cookie的有效期为1小时
         cookie.setMaxAge(60*60);
         cookie.setPath("/");
-//      将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器
+        // 将cookie对象添加到response对象中，这样服务器在输出response对象中的内容时就会把cookie也输出到客户端浏览器
         response.addCookie(cookie);
 
         logger.info("用户名是：" + userRegisterValidator.getUsername() + "，昵称是：" + userRegisterValidator.getNickname() + "，部门是:" + userRegisterValidator.getDepartment());

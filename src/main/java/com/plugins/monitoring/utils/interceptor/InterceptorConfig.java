@@ -18,6 +18,9 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
 
         MyInterceptor account = new MyInterceptor();
 
-        registry.addInterceptor(account).addPathPatterns("/**");
+        registry.addInterceptor(account).addPathPatterns("/*")
+                .excludePathPatterns("/api/login", "/api/register");
+
+        super.addInterceptors(registry);
     }
 }

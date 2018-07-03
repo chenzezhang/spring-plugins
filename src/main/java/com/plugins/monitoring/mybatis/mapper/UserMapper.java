@@ -19,7 +19,9 @@ public interface UserMapper {
     @Select("SELECT * FROM db_user WHERE user_name = #{username}")
     @Results({
             @Result(property = "id", column = "id"),
-            @Result(property = "username", column = "user_name")
+            @Result(property = "username", column = "user_name"),
+            @Result(property = "nickname", column = "nick_name"),
+            @Result(property = "password", column = "password"),
     })
     User getUserName(String username);
 
@@ -27,7 +29,7 @@ public interface UserMapper {
     int insert(User user);
 
     @Update("UPDATE db_user SET roleName=#{user_name} WHERE id =#{id}")
-    void update(String user_name);
+    int update(String user_name);
 
     @Delete("DELETE FROM db_user WHERE id =#{id}")
     void delete(Long id);

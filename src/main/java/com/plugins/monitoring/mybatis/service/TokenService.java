@@ -17,11 +17,15 @@ public class TokenService {
     @Autowired
     private TokenMapper tokenMapper;
 
-    public Token getToken(char id) {
+    public Token getToken(String id) {
         return tokenMapper.getToken( id );
     }
 
     public int insert(Token token) {
         return tokenMapper.insert( token );
+    }
+
+    public void update(String id) {
+        tokenMapper.update( id );
     }
 }

@@ -21,16 +21,15 @@ public interface TokenMapper {
             @Result(property = "user_id", column = "user_id"),
             @Result(property = "role_id", column = "role_id")
     })
-    Token getToken(char id);
+    Token getToken(String id);
 
     @Insert("INSERT INTO db_token(id, user_id, role_id) VALUES(#{id}, #{user_id}, #{role_id})")
     int insert(Token token);
 
     @Update("UPDATE db_token SET id=#{id} WHERE id =#{id}")
-    void update(char id);
+    void update(String id);
 
     @Delete("DELETE FROM db_token WHERE id =#{id}")
-    void delete(Long id);
-
+    void delete(String id);
 
 }

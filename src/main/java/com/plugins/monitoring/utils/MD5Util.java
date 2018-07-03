@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 /**
  * @Auther: Rockzcz
  * @Date: 2018/6/28 17:41
- * @Description:
+ * @Description: md5 加密
  */
 public class MD5Util {
 
@@ -35,4 +35,12 @@ public class MD5Util {
             return null;
         }
     }
+//
+//    public static void main(String[] args){
+//        String a = "12341234";
+//
+//        System.out.print( MD5Util.MD5( a ) + "=============" + "\b" + "" );
+//        System.out.print( "ED2B1F468C5F915F3F1CF75D7068BAAE" );
+//
+//    }
     }
