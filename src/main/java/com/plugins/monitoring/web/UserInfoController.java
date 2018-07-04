@@ -52,15 +52,12 @@ public class UserInfoController {
 
         User user = userService.getUserId( getToken.getUser_id());
 
-
-
         userinfo.setUsername(user.getUsername());
         userinfo.setNickname( user.getNickname());
 
-        String time = DateUtil.stampToDate( String.valueOf( user.getCreateTime() ) );;
+        String time = DateUtil.stampToDate(String.valueOf( user.getCreateTime()));
         userinfo.setTime(time);
-
-
+        
         return userinfo;
     }
 }
