@@ -26,6 +26,10 @@ public class UserService {
         return userMapper.getUserName( username );
     }
 
+    public User getUserId(int user_id) {
+        return userMapper.getUserInfo( user_id );
+    }
+
     /**
      * 数据库更新
      * @param user_name

@@ -1,5 +1,8 @@
 package com.plugins.monitoring.mybatis.entity;
 
+import java.util.Date;
+
+
 /**
  * @Auther: Rockzcz
  * @Date: 2018/6/28 15:14
@@ -12,6 +15,7 @@ public class User {
     private String password;
     private int role_id;
     private int id;
+    private Date createTime;
 
     public User(){};
 
@@ -24,6 +28,14 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
     }
 
     public void setUsername(String username) {

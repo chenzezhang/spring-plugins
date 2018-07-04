@@ -46,7 +46,7 @@ public class RegisterController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value="/api/register", method = RequestMethod.POST)
+    @RequestMapping(value="/plugin/api/register", method = RequestMethod.POST)
 
     public Object register(@Valid OauthRegister userRegisterValidator, BindingResult request, HttpServletResponse response) {
 

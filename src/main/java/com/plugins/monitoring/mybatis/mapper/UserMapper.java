@@ -25,10 +25,18 @@ public interface UserMapper {
     })
     User getUserName(String username);
 
+    @Select("SELECT * FROM db_user WHERE id = #{id}")
+    @Results({
+            @Result(property = "username", column = "user_name"),
+            @Result(property = "nickname", column = "nick_name"),
+            @Result(property = "createTime", column = "create_time")
+    })
+    User getUserInfo(int id);
+
     @Insert("INSERT INTO db_user(user_name, nick_name, password, role_id) VALUES(#{username}, #{nickname}, #{password}, #{role_id})")
     int insert(User user);
 
-    @Update("UPDATE db_user SET roleName=#{user_name} WHERE id =#{id}")
+    @Update("UPDATE db_user SET user_name=#{user_name} WHERE id =#{id}")
     int update(String user_name);
 
     @Delete("DELETE FROM db_user WHERE id =#{id}")

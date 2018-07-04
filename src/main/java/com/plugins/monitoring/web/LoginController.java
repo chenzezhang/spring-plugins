@@ -34,7 +34,7 @@ public class LoginController {
     @Autowired
     private RedisService redisService ;
 
-    @RequestMapping(value = "/api/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/plugin/api/login",method = RequestMethod.POST)
     public Object Login(@Valid OauthUser userLoginValidator, BindingResult request, HttpServletResponse response) {
 
         Logger logger = LoggerFactory.getLogger(LoginController.class);
