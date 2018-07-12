@@ -25,7 +25,9 @@ public class TokenService {
         return tokenMapper.insert( token );
     }
 
-    public void update(String id) {
+    public void update(Token id) {
         tokenMapper.update( id );
     }
+
+    public void delete(Token id) { tokenMapper.delete( id ); }
 }

@@ -57,7 +57,7 @@ public class UserInfoController {
 
         String time = DateUtil.stampToDate(String.valueOf( user.getCreateTime()));
         userinfo.setTime(time);
-        
+
         return userinfo;
     }
 }

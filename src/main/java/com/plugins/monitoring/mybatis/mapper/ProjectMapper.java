@@ -27,10 +27,10 @@ public interface ProjectMapper {
     int insert(Project project);
 
     @Update("UPDATE db_permissions SET permissions_id=#{permissions_id}, role_id = #{role_id} WHERE id =#{id}")
-    void update(String roleName);
+    void update(Project roleName);
 
     @Delete("DELETE FROM db_permissions WHERE id =#{id}")
-    void delete(Long id);
+    void delete(Project id);
 
 
 }

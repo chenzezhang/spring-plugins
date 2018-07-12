@@ -37,8 +37,8 @@ public interface UserMapper {
     int insert(User user);
 
     @Update("UPDATE db_user SET user_name=#{user_name} WHERE id =#{id}")
-    int update(String user_name);
+    int update(User user_name);
 
     @Delete("DELETE FROM db_user WHERE id =#{id}")
-    void delete(Long id);
+    void delete(User id);
 }
