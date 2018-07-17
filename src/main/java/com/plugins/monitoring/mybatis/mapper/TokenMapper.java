@@ -27,7 +27,7 @@ public interface TokenMapper {
     int insert(Token token);
 
     @Update("UPDATE db_token SET id=#{id} WHERE id =#{id}")
-    void update(Token id);
+    void update(String id);
 
     @Delete("DELETE FROM db_token WHERE id =#{id}")
     void delete(Token id);
