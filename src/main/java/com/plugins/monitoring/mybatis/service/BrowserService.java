@@ -2,6 +2,7 @@ package com.plugins.monitoring.mybatis.service;
 
 import com.plugins.monitoring.mybatis.entity.Browser;
 import com.plugins.monitoring.mybatis.mapper.BrowserMapper;
+import com.plugins.monitoring.utils.FindDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,12 @@ public class BrowserService {
     }
 
     public Browser getBrowserId(String id) {
-        return getBrowserId( id );
+        return browserMapper.getBrowserId( id );
+    }
+
+    public Browser queryAllCount(FindDate page) { return browserMapper.queryAllCount(page); }
+
+    public Browser queryAllCountSize() {
+         return browserMapper.queryAllCountSize();
     }
 }

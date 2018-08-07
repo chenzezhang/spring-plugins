@@ -8,28 +8,33 @@ package com.plugins.monitoring.mybatis.entity;
 public class Browser {
     private String account;
     private String source;
-    private String user_agent;
-    private String app_version;
-    private String local_url;
+    private String userAgent;
+    private String appVersion;
+    private String localUrl;
     private String sh;
     private String sw;
     private String cd;
+    private int total;
     private int projectId;
 
     public Browser(){};
 
-    public Browser(String account, String source, String user_agent, String app_version, String local_url, String sh, String sw, String cd, int projectId){
+    public Browser(String account, String source, String userAgent, String appVersion, String localUrl, String sh, String sw, String cd, int projectId, int total){
         this.account = account;
         this.source = source;
-        this.user_agent = user_agent;
-        this.app_version = app_version;
-        this.local_url = local_url;
+        this.userAgent = userAgent;
+        this.appVersion = appVersion;
+        this.localUrl = localUrl;
         this.sh = sh;
         this.sw = sw;
         this.cd = cd;
         this.projectId = projectId;
+        this.total = total;
     }
 
+    public int getTotal() {
+        return total;
+    }
     public void setAccount(String account) {
         this.account = account;
     }
@@ -47,27 +52,27 @@ public class Browser {
     }
 
     public void setUserAgent(String userAgent) {
-        this.user_agent = userAgent;
+        this.userAgent = userAgent;
     }
 
     public String getUserAgent() {
-        return user_agent;
+        return userAgent;
     }
 
     public void setAppVersion(String appVersion) {
-        this.app_version = appVersion;
+        this.appVersion = appVersion;
     }
 
     public String getAppVersion() {
-        return app_version;
+        return appVersion;
     }
 
     public void setLocalUrl(String localUrl) {
-        this.local_url = localUrl;
+        this.localUrl = localUrl;
     }
 
     public String getLocalUrl() {
-        return local_url;
+        return localUrl;
     }
 
     public void setSh(String sh) {

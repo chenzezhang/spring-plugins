@@ -41,7 +41,9 @@ public class SetBasicController {
 
     private String token;
 
-    @RequestMapping(value="/plugin/api/setBasic", method = RequestMethod.post)
+    private Integer total;
+
+    @RequestMapping(value="/plugin/api/setBasic", method=RequestMethod.POST)
 
     public Object SetBasicController(Browser result, HttpServletRequest httpServletRequest) {
 
@@ -70,7 +72,9 @@ public class SetBasicController {
         browser.setCd( result.getCd() );
         browser.setProjectId( getProjectId.getPermission_id() );
 
-        logger.info("brower" + result);
+        browserMapper.insert( browser );
+
+        logger.info("brower------msg" + result);
 
         return ResultUtils.warn(ResultCode.Success);
     }

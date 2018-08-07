@@ -69,12 +69,15 @@ public class MyInterceptor implements HandlerInterceptor {
 
             }
         }
+        System.out.print( httpServletResponse.getStatus() );
         return true;
     }
 
     //请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws IOException {
+
+        System.out.print( httpServletResponse );
 
         login login = new login();
 
@@ -85,7 +88,13 @@ public class MyInterceptor implements HandlerInterceptor {
 
     //在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws IOException {
+
+        Logger logger = LoggerFactory.getLogger(login.class);
+
+        if(httpServletResponse.getStatus() == 400) {
+            logger.info("参数错误");
+        }
     }
 
     /**

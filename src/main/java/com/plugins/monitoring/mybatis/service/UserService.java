@@ -35,7 +35,7 @@ public class UserService {
      * @param user_name
      * @return
      */
-    public void updateValue(String user_name) {
+    public void updateValue(User user_name) {
         userMapper.update( user_name );
     }
 
