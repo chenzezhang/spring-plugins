@@ -28,7 +28,7 @@ public class GetBasicController {
 
     /**
      * @param 此处对应返回数据,前端需要分页展示。
-     * @param param: { page: 1, pageSize: 10}
+     * @param { page: 1, pageSize: 10}
      */
 
     @RequestMapping(value="/plugin/api/getBasic", method=RequestMethod.GET)
